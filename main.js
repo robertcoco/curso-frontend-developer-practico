@@ -5,6 +5,7 @@ const menuMobile = document.querySelector(".mobile-menu");
 const shopLogo = document.querySelector(".navbar-shopping-cart");
 const aside = document.querySelector(".product-detail");
 
+// opennig and closing of the mobile menu
 menuHamburger.addEventListener("click", () => {
     const isShopCartOpened = !aside.classList.contains("inactive");
 
@@ -13,6 +14,7 @@ menuHamburger.addEventListener("click", () => {
     }
 });
 
+// opennig and closing of the shopping product detail
 shopLogo.addEventListener("click", () => {
     const isMenuMobileOpened = !menuMobile.classList.contains("inactive");
 
@@ -96,7 +98,7 @@ function renderElements(arr) {
         const img = document.createElement("img");
         img.setAttribute("src", product.img);
 
-        const cardContainer = document.querySelector(".cards-container");
+        cardContainer = document.querySelector(".cards-container");
 
         ProductCard.append(img, ProductInfo);
         ProductFigure.appendChild(ProductImgCard);
@@ -105,7 +107,44 @@ function renderElements(arr) {
 
         cardContainer.appendChild(ProductCard);
     }
-
+    
 }
 
 renderElements(products);
+// Logic when the user click a product to show the info
+
+const showInfoOfTheProduct = () => {
+    const mainContainer = document.querySelector(".main-container");
+    
+    const ShowProductInfo = document.createElement("div");
+    mainContainer.removeChild(cardContainer);
+
+    ShowProductInfo.innerHTML = `
+    <aside class="shoppingCartInfo">
+        <div class="shoppingCartInfo-close">
+            <img src="./icons/icon_close.png" alt="close">
+        </div>
+        <img src="https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="bike">
+        <div class="productShoppinCart-info">
+            <p>${product.price}</p>
+            <p>${product.name}</p>
+            <p>With its practical position, this bike also fulfills a decorative function, add your hall or workspace.</p>
+            <button class="primary-button add-to-cart-button">
+                <img src="./icons/bt_add_to_cart.svg" alt="add to cart">
+                Add to cart
+            </button>
+        </div>
+        </aside>  
+    `;
+    
+    const container = document.querySelector(".container");
+    container.appendChild(ShowProductInfo);
+}
+
+const ProductCard = document.querySelectorAll(".product-card");
+
+ProductCard.forEach(product => {
+product.addEventListener("click", showInfoOfTheProduct);
+});
+
+
